@@ -1,54 +1,48 @@
 import {} from "../services/authServices.js";
 import HttpError from "../helpers/HttpError.js";
-import { getUsersSchema } from "../schemas/authSchemas.js";
+import ctrlWrapper from "../decorator/ctrlWrapper.js";
 
 const getAllUsers = async (_, res, next) => {
-  try {
-    const result = await dataBase.getAllUsers();
+  const result = await dataBase.getAllUsers();
 
-    res.json(result);
-  } catch (error) {
-    next(error);
-  }
+  res.json(result);
 };
 
 const getUserById = async (req, res) => {
-  try {
-    throw HttpError(404, "#");
-    res.json(null);
-  } catch (error) {
-    next(error);
-  }
+  throw HttpError(404, "#");
+  res.json(null);
 };
 
 const createUser = async (req, res) => {
-  try {
-    res.json(null);
-  } catch (error) {
-    next(error);
-  }
+  const result = await dataBase.createUser(req.body);
+
+  res.status(201).json(result);
 };
 
 const updateUserById = async (req, res) => {
-  try {
-    res.json(null);
-  } catch (error) {
-    next(error);
-  }
+  const { id } = req.params;
+  const result = await dataBase.updateUserById(id, req.body);
+
+  res.json(result);
 };
 
 const deleteUserById = async (req, res) => {
-  try {
-    res.json(null);
-  } catch (error) {
-    next(error);
+  const { id } = req.params;
+  const result = await dataBase.deleteUserById(id);
+
+  if (!result) {
+    throw HttpError(404, "Not Found");
   }
+
+  res.json({
+    message: "Delete success",
+  });
 };
 
 export default {
-  getAllUsers,
-  getUserById,
-  createUser,
-  updateUserById,
-  deleteUserById,
+  getAllUsers: ctrlWrapper(getAllUsers),
+  getUserById: ctrlWrapper(getUserById),
+  createUser: ctrlWrapper(createUser),
+  updateUserById: ctrlWrapper(updateUserById),
+  deleteUserById: ctrlWrapper(deleteUserById),
 };
