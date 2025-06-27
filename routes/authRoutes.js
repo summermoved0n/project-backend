@@ -5,7 +5,7 @@ import {
   userRegistrationSchema,
   userLoginSchema,
 } from "../schemas/authSchemas.js";
-import isValidId from "../middlewares/isvalidId.js";
+// import isValidId from "../middlewares/isvalidId.js";
 
 const authRouter = express.Router();
 

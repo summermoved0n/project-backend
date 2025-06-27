@@ -8,10 +8,13 @@ import User from "../models/Users.js";
 
 export const createUser = async (data) => {
   const hashPassword = await bcrypt.hash(data.password, 10);
-  User.create({ ...data, password: hashPassword }, "username email");
+  return User.create({ ...data, password: hashPassword });
 };
 
 export const findUser = (filter) => User.findOne(filter);
+
+export const validatePassword = (password, hashPassword) =>
+  bcrypt.compare(password, hashPassword);
 
 // export const updateUserById = (id, data) =>
 //   User.findByIdAndUpdate({ _id: id }, data, { new: true, runValidators: true });

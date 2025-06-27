@@ -1,6 +1,10 @@
+import jwt from "jsonwebtoken";
+
 import * as dbAuthService from "../services/authServices.js";
 import HttpError from "../helpers/HttpError.js";
 import ctrlWrapper from "../decorator/ctrlWrapper.js";
+
+const { JWT_SECRET } = process.env;
 
 // const getAllUsers = async (_, res) => {
 //   const result = await dbAuthService.getAllUsers();
@@ -47,7 +51,6 @@ import ctrlWrapper from "../decorator/ctrlWrapper.js";
 
 const signupUser = async (req, res) => {
   const { email } = req.body;
-  console.log({ email });
   const user = await dbAuthService.findUser({ email });
 
   if (user) {
@@ -56,10 +59,39 @@ const signupUser = async (req, res) => {
 
   const newUser = await dbAuthService.createUser(req.body);
 
-  res.status(201).json(newUser);
+  res.status(201).json({
+    username: newUser.username,
+    email: newUser.email,
+  });
 };
 
-const signinUser = async (req, res) => {};
+const signinUser = async (req, res) => {
+  const { email, password } = req.body;
+  const user = await dbAuthService.findUser({ email });
+
+  if (!user) {
+    throw HttpError(401, "Email or password valid");
+  }
+
+  const comparePassword = await dbAuthService.validatePassword(
+    password,
+    user.password
+  );
+
+  if (!comparePassword) {
+    throw HttpError(401, "Email or password valid");
+  }
+
+  const { _id: id } = user;
+
+  const payload = {
+    id,
+  };
+
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "500h" });
+
+  res.json({ token });
+};
 
 export default {
   signupUser: ctrlWrapper(signupUser),
