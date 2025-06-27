@@ -1,10 +1,23 @@
 import { Schema, model } from "mongoose";
 import { handleSaveError, setUpdateSettings } from "./hooks.js";
+import { emailPattern } from "../constants/user-constants.js";
 
-const authSchema = new Schema(
+const userSchema = new Schema(
   {
-    username: String,
-    password: String,
+    username: {
+      type: String,
+      require: true,
+    },
+    email: {
+      type: String,
+      match: emailPattern,
+      require: true,
+      unique: true,
+    },
+    password: {
+      type: String,
+      require: true,
+    },
   },
   {
     versionKey: false,
@@ -12,10 +25,10 @@ const authSchema = new Schema(
   }
 );
 
-authSchema.post("save", handleSaveError);
-authSchema.pre("findOneAndUpdate", setUpdateSettings);
-authSchema.post("findOneAndUpdate", handleSaveError);
+userSchema.post("save", handleSaveError);
+userSchema.pre("findOneAndUpdate", setUpdateSettings);
+userSchema.post("findOneAndUpdate", handleSaveError);
 
-const User = model("user", authSchema);
+const User = model("user", userSchema);
 
 export default User;
