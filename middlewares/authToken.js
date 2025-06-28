@@ -6,13 +6,14 @@ import { findUser } from "../services/authServices.js";
 const { JWT_SECRET } = process.env;
 
 const authToken = async (req, res, next) => {
-  const { autorization } = req.headers;
+  const { authorization } = req.headers;
+  console.log(authorization);
 
-  if (!autorization) {
+  if (!authorization) {
     return next(HttpError(401, "Autorization header not found"));
   }
 
-  const [bearer, token] = autorization.split(" ");
+  const [bearer, token] = authorization.split(" ");
 
   if (bearer !== "Bearer") {
     return next(HttpError(401, "Bearer not found"));
