@@ -57,11 +57,10 @@ const signupUser = async (req, res) => {
     throw HttpError(409, "Email in use");
   }
 
-  const newUser = await dbAuthService.createUser(req.body);
+  await dbAuthService.createUser(req.body);
 
   res.status(201).json({
-    username: newUser.username,
-    email: newUser.email,
+    message: "Create success",
   });
 };
 
@@ -90,7 +89,9 @@ const signinUser = async (req, res) => {
 
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "500h" });
 
-  res.json({ token });
+  console.log(user);
+
+  res.json({ token, user: { username: user.username, email: user.email } });
 };
 
 export default {

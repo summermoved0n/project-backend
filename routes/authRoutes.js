@@ -1,7 +1,6 @@
 import express from "express";
 import authControllers from "../controllers/authControllers.js";
 import validateBody from "../decorator/validateBody.js";
-// import isValidId from "../middlewares/isValidId.js";
 
 import {
   userRegistrationSchema,
