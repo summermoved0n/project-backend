@@ -1,10 +1,14 @@
 import { Schema, model } from "mongoose";
 import { handleSaveError, setUpdateSettings } from "./hooks.js";
+import { required } from "joi";
 
 const taskSchema = new Schema(
   {
-    username: String,
-    password: String,
+    owner: {
+      type: Schema.Types.ObjectId,
+      ref: 'user',
+      required: true,
+    },
   },
   {
     versionKey: false,

@@ -1,23 +1,28 @@
 import express from "express";
+
 import taskControllers from "../controllers/taskControllers.js";
+import authToken from "../middlewares/authToken.js";
+
 // import validateBody from "../decorator/validateBody.js";
 // import { createUserSchema } from "../schemas/authSchemas.js";
-import isValidId from "../middlewares/isvalidId.js";
+// import isValidId from "../middlewares/isValidId.js";
 
-const taskRoutes = express.Router();
+const taskRouter = express.Router();
 
-// taskRoutes.get("/", taskControllers.getAllUsers);
+taskRouter.use(authToken);
 
-// taskRoutes.get("/:id", isValidId, taskControllers.getTaskById);
+taskRouter.get("/", taskControllers.getAllTasks);
 
-// taskRoutes.post(
-//   "/",
-//   // validateBody(createUserSchema),
-//   taskControllers.createTask
-// );
+taskRouter.get("/:id", taskControllers.getTaskById);
 
-// taskRoutes.put("/:id", isValidId, taskControllers.updateTaskById);
+taskRouter.post(
+  "/",
+  // validateBody(createUserSchema),
+  taskControllers.createTask
+);
 
-// taskRoutes.delete("/:id", isValidId, taskControllers.deleteTaskById);
+taskRouter.put("/:id", taskControllers.updateTaskById);
 
-export default taskRoutes;
+taskRouter.delete("/:id", taskControllers.deleteTaskById);
+
+export default taskRouter;
