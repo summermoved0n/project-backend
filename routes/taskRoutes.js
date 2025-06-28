@@ -1,28 +1,28 @@
 import express from "express";
 
-import taskControllers from "../controllers/taskControllers.js";
+// import taskControllers from "../controllers/taskControllers.js";
 import authToken from "../middlewares/authToken.js";
+import { createTaskSchema } from "../schemas/taskSchema.js";
+import validateBody from "../decorator/validateBody.js";
 
-// import validateBody from "../decorator/validateBody.js";
-// import { createUserSchema } from "../schemas/authSchemas.js";
 // import isValidId from "../middlewares/isValidId.js";
 
 const taskRouter = express.Router();
 
-taskRouter.use(authToken);
+// taskRouter.use(authToken);
 
-taskRouter.get("/", taskControllers.getAllTasks);
+// taskRouter.get("/", taskControllers.getAllTasks);
 
-taskRouter.get("/:id", taskControllers.getTaskById);
+// taskRouter.get("/:id", taskControllers.getTaskById);
 
-taskRouter.post(
-  "/",
-  // validateBody(createUserSchema),
-  taskControllers.createTask
-);
+// taskRouter.post(
+//   "/",
+//   // validateBody(createTaskSchema),
+//   taskControllers.createTask
+// );
 
-taskRouter.put("/:id", taskControllers.updateTaskById);
+// taskRouter.put("/:id", taskControllers.updateTaskById);
 
-taskRouter.delete("/:id", taskControllers.deleteTaskById);
+// taskRouter.delete("/:id", taskControllers.deleteTaskById);
 
 export default taskRouter;
