@@ -87,16 +87,35 @@ const signinUser = async (req, res) => {
     id,
   };
 
-  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "500h" });
-
-  console.log(user);
+  const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "300h" });
+  await dbAuthService.updateUser({ _id: id }, { token });
 
   res.json({ token, user: { username: user.username, email: user.email } });
+};
+
+const currentUser = async (req, res) => {
+  const { username, email } = req.user;
+
+  res.json({
+    email,
+    username,
+  });
+};
+
+const signoutUser = async (req, res) => {
+  const { _id } = req.user;
+  await dbAuthService.updateUser({ _id }, { token: null });
+
+  res.json({
+    message: "Signout success",
+  });
 };
 
 export default {
   signupUser: ctrlWrapper(signupUser),
   signinUser: ctrlWrapper(signinUser),
+  currentUser: ctrlWrapper(currentUser),
+  signoutUser: ctrlWrapper(signoutUser),
   // getAllUsers: ctrlWrapper(getAllUsers),
   // getUserById: ctrlWrapper(getUserById),
   // createUser: ctrlWrapper(createUser),

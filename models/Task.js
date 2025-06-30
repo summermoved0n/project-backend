@@ -1,17 +1,27 @@
 import { Schema, model } from "mongoose";
 import { handleSaveError, setUpdateSettings } from "./hooks.js";
 
+const babyServiceSchema = new Schema({
+  time: { type: String, require: true },
+  milkFormula: {
+    type: Number,
+  },
+  breastFeedingTime: { type: Number },
+  poopSize: {
+    type: String,
+    enum: ["big", "small"],
+  },
+  isPee: {
+    type: Boolean,
+  },
+});
+
 const taskSchema = new Schema(
   {
-    breastFeedingTime: { type: Number },
-    poopSize: {
+    date: {
       type: String,
-      enum: ["big", "small"],
     },
-    peeSize: {
-      type: String,
-      enum: ["big", "small"],
-    },
+    babyService: [babyServiceSchema],
     owner: {
       type: Schema.Types.ObjectId,
       ref: "user",

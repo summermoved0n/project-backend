@@ -16,6 +16,8 @@ export const findUser = (filter) => User.findOne(filter);
 export const validatePassword = (password, hashPassword) =>
   bcrypt.compare(password, hashPassword);
 
+export const updateUser = (filter, data) =>
+  User.findByIdAndUpdate(filter, data);
 // export const updateUserById = (id, data) =>
 //   User.findByIdAndUpdate({ _id: id }, data, { new: true, runValidators: true });
 

@@ -27,6 +27,10 @@ const authToken = async (req, res, next) => {
       return next(HttpError(401, "User not found"));
     }
 
+    if (!user.token) {
+      return next(HttpError(401, "User already signout"));
+    }
+
     req.user = user;
     next();
   } catch (error) {
