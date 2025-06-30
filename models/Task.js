@@ -1,8 +1,9 @@
 import { Schema, model } from "mongoose";
 import { handleSaveError, setUpdateSettings } from "./hooks.js";
+import { datePattern, timePattern } from "../constants/task-constants.js";
 
 const babyServiceSchema = new Schema({
-  time: { type: String, require: true },
+  time: { type: String, require: true, match: timePattern },
   milkFormula: {
     type: Number,
   },
@@ -20,6 +21,8 @@ const taskSchema = new Schema(
   {
     date: {
       type: String,
+      require: true,
+      match: datePattern,
     },
     babyService: [babyServiceSchema],
     owner: {

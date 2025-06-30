@@ -11,7 +11,7 @@ const taskRouter = express.Router();
 
 taskRouter.use(authToken);
 
-// taskRouter.get("/", taskControllers.getAllTasks);
+taskRouter.get("/", taskControllers.getAllTasks);
 
 // taskRouter.get("/:id", taskControllers.getTaskById);
 
