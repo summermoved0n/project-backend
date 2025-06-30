@@ -4,12 +4,21 @@ import ctrlWrapper from "../decorator/ctrlWrapper.js";
 
 const getAllTasks = async (req, res) => {
   const { _id: owner } = req.user;
+
+  if (req.query.date) {
+    const { date } = req.query;
+    const result = await dbTaskService.getAllTasks({ owner, date });
+
+    return res.json(result);
+  }
+
   const result = await dbTaskService.getAllTasks({ owner });
 
   res.json(result);
 };
 
 const getTaskById = async (req, res) => {
+  console.log("One task");
   const { id } = req.params;
   const { _id: owner } = req.user;
   const result = await dbTaskService.getOneTask({ _id: id, owner });

@@ -13,7 +13,7 @@ taskRouter.use(authToken);
 
 taskRouter.get("/", taskControllers.getAllTasks);
 
-// taskRouter.get("/:id", taskControllers.getTaskById);
+taskRouter.get("/:id", taskControllers.getTaskById);
 
 taskRouter.post(
   "/",
