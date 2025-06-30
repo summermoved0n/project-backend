@@ -28,10 +28,14 @@ const createTask = async (req, res) => {
   const findDate = await dbTaskService.getOneTask({ date });
 
   if (!findDate) {
-    const result = await dbTaskService.createTask({ ...req.body, owner });
+    const createTask = await dbTaskService.createTask({ ...req.body, owner });
+    const { _id } = createTask;
+    createTask.babyService.push(rest);
+    const result = await dbTaskService.updateTask({ _id }, createTask);
 
     return res.status(201).json(result);
   }
+
   const { _id } = findDate;
   findDate.babyService.push(rest);
   const result = await dbTaskService.updateTask({ _id }, findDate);
