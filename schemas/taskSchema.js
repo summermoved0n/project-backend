@@ -16,4 +16,11 @@ export const createTaskSchema = Joi.object({
   isPoop: Joi.boolean(),
   isPee: Joi.boolean(),
   vitaminD: Joi.boolean(),
-});
+}).or(
+  "milkFormula",
+  "breastFeedingTime",
+  "breastSide",
+  "isPoop",
+  "isPee",
+  "vitaminD"
+);
