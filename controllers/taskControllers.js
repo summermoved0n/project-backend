@@ -34,6 +34,8 @@ const createTask = async (req, res) => {
   console.log(req.body);
   const { _id: owner } = req.user;
   const { date, ...rest } = req.body;
+  console.log(req.body);
+  console.log("rest", rest);
   const findDate = await dbTaskService.getOneTask({ date });
 
   if (!findDate) {

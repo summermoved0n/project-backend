@@ -18,7 +18,7 @@ const babyServiceSchema = new Schema({
     type: Boolean,
   },
   breastSide: {
-    type: Boolean,
+    type: String,
     enum: ["left", "right"],
   },
 });
