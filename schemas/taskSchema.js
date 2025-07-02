@@ -12,6 +12,8 @@ export const createTaskSchema = Joi.object({
     .messages({ "string.pattern.base": "Time must be with HH:MM format." }),
   milkFormula: Joi.number(),
   breastFeedingTime: Joi.number(),
-  poopSize: Joi.string().valid("big", "small"),
+  breastSide: Joi.string().valid("left", "right"),
+  isPoop: Joi.boolean(),
   isPee: Joi.boolean(),
+  vitaminD: Joi.boolean(),
 });

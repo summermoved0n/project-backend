@@ -8,12 +8,18 @@ const babyServiceSchema = new Schema({
     type: Number,
   },
   breastFeedingTime: { type: Number },
-  poopSize: {
-    type: String,
-    enum: ["big", "small"],
+  isPoop: {
+    type: Boolean,
   },
   isPee: {
     type: Boolean,
+  },
+  vitaminD: {
+    type: Boolean,
+  },
+  breastSide: {
+    type: Boolean,
+    enum: ["left", "right"],
   },
 });
 
