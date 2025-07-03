@@ -56,8 +56,19 @@ const createTask = async (req, res) => {
 const updateTaskById = async (req, res) => {
   const { id } = req.params;
   const { _id: owner } = req.user;
+  const { task } = req.query;
 
-  const result = await dbTaskService.updateTask({ _id: id, owner }, req.body);
+  const setObject = {};
+  for (const [key, value] of Object.entries(req.body)) {
+    setObject[`babyService.$.${key}`] = value;
+  }
+
+  console.log(setObject);
+
+  const result = await dbTaskService.updateTask(
+    { _id: id, owner, "babyService._id": task },
+    { $set: setObject }
+  );
 
   if (!result) {
     throw HttpError(404, "Task not found");
@@ -69,30 +80,20 @@ const updateTaskById = async (req, res) => {
 const deleteTaskById = async (req, res) => {
   const { id } = req.params;
   const { _id: owner } = req.user;
+  const { task } = req.query;
 
-  console.log(req.params.id);
-  console.log(req.query.task);
+  const result = await dbTaskService.updateTask(
+    { _id: id, owner },
+    { $pull: { babyService: { _id: task } } }
+  );
 
-  const findTask = await dbTaskService.getAllTasks({ _id: id, owner });
-
-  if (findTask) {
-    const { babyService } = findTask;
-    const result = dbTaskService.getOneTask({
-      "babyService._id": `${req.query.task}`,
-    });
-
-    console.log(result);
+  if (!result) {
+    throw HttpError(404, "Task not Found");
   }
 
-  // const result = await dbTaskService.deleteTask({ _id: id, owner });
-
-  // if (!result) {
-  //   throw HttpError(404, "Task not Found");
-  // }
-
-  // res.json({
-  //   message: "Delete success",
-  // });
+  res.json({
+    message: "Delete success",
+  });
 };
 
 export default {
