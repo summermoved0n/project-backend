@@ -70,19 +70,29 @@ const deleteTaskById = async (req, res) => {
   const { id } = req.params;
   const { _id: owner } = req.user;
 
-  const findTask = await dbTaskService.getAllTasks({ owner });
+  console.log(req.params.id);
+  console.log(req.query.task);
 
-  console.log(findTask);
+  const findTask = await dbTaskService.getAllTasks({ _id: id, owner });
 
-  const result = await dbTaskService.deleteTask({ _id: id, owner });
+  if (findTask) {
+    const { babyService } = findTask;
+    const result = dbTaskService.getOneTask({
+      "babyService._id": `${req.query.task}`,
+    });
 
-  if (!result) {
-    throw HttpError(404, "Task not Found");
+    console.log(result);
   }
 
-  res.json({
-    message: "Delete success",
-  });
+  // const result = await dbTaskService.deleteTask({ _id: id, owner });
+
+  // if (!result) {
+  //   throw HttpError(404, "Task not Found");
+  // }
+
+  // res.json({
+  //   message: "Delete success",
+  // });
 };
 
 export default {
