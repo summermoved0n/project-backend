@@ -21,8 +21,8 @@ taskRouter.post(
   taskControllers.createTask
 );
 
-// taskRouter.put("/:id", taskControllers.updateTaskById);
+taskRouter.put("/:id", taskControllers.updateTaskById);
 
-// taskRouter.delete("/:id", taskControllers.deleteTaskById);
+taskRouter.delete("/:id", taskControllers.deleteTaskById);
 
 export default taskRouter;

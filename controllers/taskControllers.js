@@ -70,6 +70,10 @@ const deleteTaskById = async (req, res) => {
   const { id } = req.params;
   const { _id: owner } = req.user;
 
+  const findTask = await dbTaskService.getAllTasks({ owner });
+
+  console.log(findTask);
+
   const result = await dbTaskService.deleteTask({ _id: id, owner });
 
   if (!result) {
