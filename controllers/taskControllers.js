@@ -35,7 +35,7 @@ const createTask = async (req, res) => {
   const { _id: owner } = req.user;
   const { date, ...rest } = req.body;
 
-  const findDate = await dbTaskService.getOneTask({ date });
+  const findDate = await dbTaskService.getOneTask({ date, owner });
 
   if (!findDate) {
     const createTask = await dbTaskService.createTask({ ...req.body, owner });
@@ -62,8 +62,6 @@ const updateTaskById = async (req, res) => {
   for (const [key, value] of Object.entries(req.body)) {
     setObject[`babyService.$.${key}`] = value;
   }
-
-  console.log(setObject);
 
   const result = await dbTaskService.updateTask(
     { _id: id, owner, "babyService._id": task },

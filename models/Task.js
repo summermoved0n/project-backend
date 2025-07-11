@@ -21,6 +21,9 @@ const babyServiceSchema = new Schema({
     type: String,
     enum: ["left", "right"],
   },
+  eyeDrop: {
+    type: Boolean,
+  },
 });
 
 const taskSchema = new Schema(

@@ -16,11 +16,35 @@ export const createTaskSchema = Joi.object({
   isPoop: Joi.boolean(),
   isPee: Joi.boolean(),
   vitaminD: Joi.boolean(),
+  eyeDrop: Joi.boolean(),
 }).or(
   "milkFormula",
   "breastFeedingTime",
   "breastSide",
   "isPoop",
   "isPee",
-  "vitaminD"
+  "vitaminD",
+  "eyeDrop"
+);
+
+export const updateTaskSchema = Joi.object({
+  time: Joi.string()
+    .pattern(timePattern)
+    .messages({ "string.pattern.base": "Time must be with HH:MM format." }),
+  milkFormula: Joi.number(),
+  breastFeedingTime: Joi.number(),
+  breastSide: Joi.string().valid("left", "right"),
+  isPoop: Joi.boolean(),
+  isPee: Joi.boolean(),
+  vitaminD: Joi.boolean(),
+  eyeDrop: Joi.boolean(),
+}).or(
+  "time",
+  "milkFormula",
+  "breastFeedingTime",
+  "breastSide",
+  "isPoop",
+  "isPee",
+  "vitaminD",
+  "eyeDrop"
 );
