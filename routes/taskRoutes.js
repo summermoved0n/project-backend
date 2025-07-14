@@ -5,15 +5,15 @@ import authToken from "../middlewares/authToken.js";
 import { createTaskSchema } from "../schemas/taskSchema.js";
 import validateBody from "../decorator/validateBody.js";
 
-// import isValidId from "../middlewares/isValidId.js";
+import isValidId from "../middlewares/isValidId.js";
 
 const taskRouter = express.Router();
 
 taskRouter.use(authToken);
 
-taskRouter.get("/", taskControllers.getAllTasks);
+taskRouter.get("/", isValidId, taskControllers.getAllTasks);
 
-taskRouter.get("/:id", taskControllers.getTaskById);
+taskRouter.get("/:id", isValidId, taskControllers.getTaskById);
 
 taskRouter.post(
   "/",
@@ -21,8 +21,8 @@ taskRouter.post(
   taskControllers.createTask
 );
 
-taskRouter.put("/:id", taskControllers.updateTaskById);
+taskRouter.put("/:id", isValidId, taskControllers.updateTaskById);
 
-taskRouter.delete("/:id", taskControllers.deleteTaskById);
+taskRouter.delete("/:id", isValidId, taskControllers.deleteTaskById);
 
 export default taskRouter;

@@ -6,6 +6,7 @@ import "dotenv/config";
 
 import authRoutes from "./routes/authRoutes.js";
 import taskRoutes from "./routes/taskRoutes.js";
+import profileRoutes from "./routes/profileRoutes.js";
 
 const { DB_HOST, PORT } = process.env;
 
@@ -17,6 +18,7 @@ app.use(express.json());
 
 app.use("/api/auth", authRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/profiles", profileRoutes);
 
 app.use((_, res) => {
   res.status(404).json({ message: "Route not found" });

@@ -31,7 +31,6 @@ const getTaskById = async (req, res) => {
 };
 
 const createTask = async (req, res) => {
-  console.log(req.body);
   const { _id: owner } = req.user;
   const { date, ...rest } = req.body;
 
